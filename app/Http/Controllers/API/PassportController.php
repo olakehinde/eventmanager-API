@@ -38,10 +38,21 @@ class PassportController extends Controller
     	$success['name'] = $user->name;
     	$success['email'] = $user->email;
 
-    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success']);
+    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     public function login(Request $request) {
-    	
+    	if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+    		$user = Auth::user();
+
+    		$success['token'] = $user->createToken('EventsManager')->accessToken;
+	    	$success['email'] = $user->email;
+
+	    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+    	}
+
+    	// return unauthorized error if login fails
+    	return response()->json(['error' => 'Unauthorized'], 401);
+
     }
 }
