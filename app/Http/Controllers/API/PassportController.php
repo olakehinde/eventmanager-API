@@ -38,7 +38,7 @@ class PassportController extends Controller
     	$success['name'] = $user->name;
     	$success['email'] = $user->email;
 
-    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+    	return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     }
 
     public function login(Request $request) {
@@ -48,7 +48,7 @@ class PassportController extends Controller
     		$success['token'] = $user->createToken('EventsManager')->accessToken;
 	    	$success['email'] = $user->email;
 
-	    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
+	    	return response()->json(['data' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success'], $this->successStatus);
     	}
 
     	// return unauthorized error if login fails
