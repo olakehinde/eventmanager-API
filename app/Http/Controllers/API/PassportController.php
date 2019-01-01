@@ -34,10 +34,11 @@ class PassportController extends Controller
     	// create the user registration
     	$user = User::create($input);
 
-    	$success['token'] = $user->createToken('MyApp')->accessToken;
+    	$success['token'] = $user->createToken('EventsManager')->accessToken;
     	$success['name'] = $user->name;
+    	$success['email'] = $user->email;
 
-    	return response()->json(['success' => $success], $this->successStatus);
+    	return response()->json(['success' => $success, 'status_code' => $this->successStatus, 'status_message' => 'Success']);
     }
 
     public function login(Request $request) {
